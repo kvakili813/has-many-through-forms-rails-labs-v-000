@@ -1,1 +1,25 @@
+<%= form_for @post do |f| %>
+  <%= f.label :title %>
+  <%= f.text_field :title %>
 
+  <%= f.label :content %>
+  <%= f.text_field :content %>
+
+  <%= f.collection_check_boxes(:category_ids, Category.all, :id, :name) %>
+
+  <!-- This below is the HTML version of the collection_check_boxes ActionView helper -->
+  <!-- <% Category.all.each do |cat| %>
+    <label for="category_id_<%= cat.id %>"><%= cat.name %></label>
+    <input type="checkbox" name="post[category_ids][]" value="<%= cat.id %>" id="category_id_<%= cat.id %>">
+  <% end %> -->
+
+  <%= f.fields_for :categories do |c| %>
+    <%= c.text_field :name %>
+  <% end %>
+
+ <!-- This below is the HTML version of the fields_for ActionView helper
+ <input type="text" id="post_categories_attributes_0_name" name="post[categories_attributes][0][name]">
+ <input type="text" id="post_categories_attributes_1_name" name="post[categories_attributes][1][name]"> -->
+
+ <%= f.submit %>
+<% end %>
